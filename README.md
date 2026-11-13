@@ -64,6 +64,10 @@ swatch, every opacity, thickness and radius gets a slider with a number field.
 **Windhawk 1.7.3** shows the same settings as plain text and number fields; the
 mod works there too, only without the pickers and sliders.
 
+The settings and the mod name are localized: Windhawk renders them in its own
+interface language (English is the default, Russian is included). Switch the
+language in Windhawk's settings, the mod follows it.
+
 ### Color themes
 
 The first setting is a list of nine themes. Each entry starts with its index and
@@ -161,6 +165,10 @@ windhawk-cli.exe mod install --file explorer-selection-border.wh.cpp
 выбора цвета с квадратиком-образцом, у прозрачности, толщины и радиуса —
 ползунок с полем числа. В Windhawk 1.7.3 те же настройки показаны обычными
 полями, мод работает одинаково.
+
+Названия настроек и мода переведены: Windhawk показывает их на своём языке
+интерфейса (по умолчанию английский, русский добавлен). Язык переключается в
+настройках самого Windhawk, мод следует за ним.
 
 Сверху список из девяти тем: `1` синяя, `2` фиолетовая, `3` бирюзовая, `4`
 зелёная, `5` оранжевая, `6` малиновая, `7` пурпурная, `8` графитовая, `9` —

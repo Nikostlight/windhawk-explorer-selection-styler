@@ -1,8 +1,10 @@
 // ==WindhawkMod==
 // @id              explorer-selection-border
 // @name            Explorer Selection Border
+// @name:ru         Оформление выделения в Проводнике
 // @description     Recolors the selection, hover highlight, navigation pane, column headers and tooltips of File Explorer
-// @version         1.2
+// @description:ru  Перекрашивает выделение, наведение, панель навигации, заголовки колонок и подсказки Проводника
+// @version         1.2.1
 // @author          Spoky
 // @include         explorer.exe
 // @architecture    x86-64
@@ -113,7 +115,9 @@ scaled automatically on monitors with a different scale factor.
 # Color theme
 - preset: custom
   $name: Color theme
+  $name:ru: Цветовая тема
   $description: "1-8 are ready palettes, the square shows the color and the number is its index. 9 keeps your own colors, the pickers below then appear."
+  $description:ru: "1-8 — готовые палитры: квадратик показывает цвет, цифра — номер. 9 — свои цвета, ниже появятся пикеры."
   $options:
     - windowsBlue: "1  🟦  Windows blue (#0078D4)"
     - violet: "2  🟪  Violet (#8B5CF6)"
@@ -124,71 +128,105 @@ scaled automatically on monitors with a different scale factor.
     - magenta: "7  💜  Magenta (#C445B8)"
     - graphite: "8  ⬛  Graphite (#6E7B8B)"
     - custom: "9  🎨  Custom colors (pickers below)"
+  $options:ru:
+    - windowsBlue: "1  🟦  Синяя Windows (#0078D4)"
+    - violet: "2  🟪  Фиолетовая (#8B5CF6)"
+    - teal: "3  🟩  Бирюзовая (#2AA198)"
+    - green: "4  🟢  Зелёная (#37A64B)"
+    - orange: "5  🟧  Оранжевая (#E8862E)"
+    - crimson: "6  🟥  Малиновая (#E0455A)"
+    - magenta: "7  💜  Пурпурная (#C445B8)"
+    - graphite: "8  ⬛  Графитовая (#6E7B8B)"
+    - custom: "9  🎨  Свои цвета (пикеры ниже)"
 # Selection
 - color: "#0078D4"
   $name: Border color
+  $name:ru: Цвет рамки
   $description: "Hex RGB color of the selection border, for example #0078D4"
+  $description:ru: "Цвет рамки выделения в формате #RRGGBB, например #0078D4"
   #! $format: colorRgb
   #! $showIf: {preset: custom}
 - opacity: 100
   $name: Border opacity
+  $name:ru: Прозрачность рамки
   $description: 0 (invisible) to 100 (solid)
+  $description:ru: 0 (невидимо) — 100 (сплошной цвет)
   #! $min: 0
   #! $max: 100
   #! $format: slider
 - thickness: 1
   $name: Border thickness
+  $name:ru: Толщина рамки
   $description: Border width in pixels, 1 to 6
+  $description:ru: Толщина рамки в пикселях, от 1 до 6
   #! $min: 1
   #! $max: 6
   #! $format: slider
 - radius: 4
   $name: Corner radius
+  $name:ru: Радиус скругления
   $description: Pixels, 0 for sharp corners
+  $description:ru: Пиксели, 0 — прямые углы
   #! $min: 0
   #! $max: 24
   #! $format: slider
 - inset: 1
   $name: Border inset
+  $name:ru: Отступ рамки
   $description: Distance in pixels between the item edge and the border
+  $description:ru: Расстояние в пикселях от края элемента до рамки
   #! $min: 0
   #! $max: 12
   #! $format: slider
 # Fill
 - fillColor: "#0078D4"
   $name: Fill color
+  $name:ru: Цвет заливки
   $description: "Hex RGB color of the selection and hover fill, for example #0078D4"
+  $description:ru: "Цвет заливки выделения и наведения, например #0078D4"
   #! $format: colorRgb
   #! $showIf: {preset: custom}
 - fillOpacity: 35
   $name: Selection fill opacity
+  $name:ru: Прозрачность заливки выделения
   $description: 0 (transparent) to 100 (solid)
+  $description:ru: 0 (прозрачно) — 100 (сплошной цвет)
   #! $min: 0
   #! $max: 100
   #! $format: slider
 - hoverFillOpacity: 18
   $name: Hover fill opacity
+  $name:ru: Прозрачность заливки при наведении
   $description: Fill opacity for the item under the mouse pointer
+  $description:ru: Заливка элемента под указателем мыши
   #! $min: 0
   #! $max: 100
   #! $format: slider
 # Tooltips
 - tooltipEnabled: true
   $name: Restyle tooltips
+  $name:ru: Перекрашивать подсказки
   $description: Repaint Explorer tooltips and round their corners, or keep the stock ones
+  $description:ru: Перерисовывать подсказки Проводника и скруглять углы или оставить стандартные
 - tooltipColor: "#103051"
   $name: Tooltip background color
+  $name:ru: Цвет фона подсказки
   $description: "Hex RGB color of the tooltip background, for example #103051"
+  $description:ru: "Цвет фона подсказки в формате #RRGGBB, например #103051"
   #! $format: colorRgb
   #! $showIf: {tooltipEnabled: true, preset: custom}
 - tooltipBorderColor: "#0078D4"
   $name: Tooltip border color
+  $name:ru: Цвет рамки подсказки
   $description: "Hex RGB color of the 1px tooltip border, for example #0078D4"
+  $description:ru: "Цвет рамки подсказки в формате #RRGGBB, например #0078D4"
   #! $format: colorRgb
   #! $showIf: {tooltipEnabled: true, preset: custom}
 - tooltipRadius: 6
   $name: Tooltip corner radius
+  $name:ru: Радиус скругления подсказки
   $description: Pixels, 0 for sharp corners
+  $description:ru: Пиксели, 0 — прямые углы
   #! $min: 0
   #! $max: 24
   #! $format: slider
