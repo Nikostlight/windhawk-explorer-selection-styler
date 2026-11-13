@@ -43,46 +43,79 @@ Tooltips are recolored and get rounded corners.
 
 ## Installation
 
-1. Install [Windhawk](https://windhawk.net/) 1.7 or newer.
+1. Install [Windhawk](https://windhawk.net/) 1.7 or newer; 2.0 adds the color
+   pickers and sliders described below.
 2. Open Windhawk, go to **Mods** -> **Create new mod**.
 3. Replace the template with the contents of
    [`explorer-selection-border.wh.cpp`](explorer-selection-border.wh.cpp).
 4. Press **Compile mod** (Ctrl+B), then **Install mod**.
 
 Alternatively, save the `.wh.cpp` file to disk and use **Install from file** in
-the same menu.
+the same menu, or install it from a terminal:
+
+```
+windhawk-cli.exe mod install --file explorer-selection-border.wh.cpp
+```
 
 ## Settings
+
+**Windhawk 2.0** draws a real settings form: every color gets a picker with a
+swatch, every opacity, thickness and radius gets a slider with a number field.
+**Windhawk 1.7.3** shows the same settings as plain text and number fields; the
+mod works there too, only without the pickers and sliders.
+
+### Color themes
+
+The first setting is a list of nine themes. Each entry starts with its index and
+a color square: `1` blue, `2` violet, `3` teal, `4` green, `5` orange,
+`6` crimson, `7` magenta, `8` graphite, `9` custom.
+
+| # | Theme | Accent | Tooltip background |
+| --- | --- | --- | --- |
+| 1 | Windows blue | `#0078D4` | `#103051` |
+| 2 | Violet | `#8B5CF6` | `#241A3D` |
+| 3 | Teal | `#2AA198` | `#0E2F2C` |
+| 4 | Green | `#37A64B` | `#10331A` |
+| 5 | Orange | `#E8862E` | `#3A2410` |
+| 6 | Crimson | `#E0455A` | `#3A1219` |
+| 7 | Magenta | `#C445B8` | `#3A1436` |
+| 8 | Graphite | `#6E7B8B` | `#222932` |
+| 9 | Custom | the pickers below | the pickers below |
+
+A theme recolors the border, the fill and the tooltips at once; opacity and
+geometry stay as you set them. The color pickers appear only for theme `9`, so
+picking a ready palette can't be spoiled by a stray hex value.
 
 ### Selection
 
 | Setting | Default | Description |
 | --- | --- | --- |
-| Border color | `#0078D4` | Hex RGB color of the selection border |
-| Border opacity | `100` | `0` (invisible) to `100` (solid) |
-| Border thickness | `1` | Border width in pixels, 1 to 6 |
-| Corner radius | `4` | Pixels, `0` for sharp corners |
-| Border inset | `1` | Distance in pixels between the item edge and the border |
+| Border color | `#0078D4` | Color picker, theme `9` only |
+| Border opacity | `100` | Slider, `0` (invisible) to `100` (solid) |
+| Border thickness | `1` | Slider, 1 to 6 pixels |
+| Corner radius | `4` | Slider, `0` for sharp corners |
+| Border inset | `1` | Slider, distance between the item edge and the border |
 
 ### Fill
 
 | Setting | Default | Description |
 | --- | --- | --- |
-| Fill color | `#0078D4` | Hex RGB color of the selection and hover fill |
-| Selection fill opacity | `35` | `0` (transparent) to `100` (solid) |
-| Hover fill opacity | `18` | Fill opacity for the item under the mouse pointer |
+| Fill color | `#0078D4` | Color picker, theme `9` only |
+| Selection fill opacity | `35` | Slider, `0` (transparent) to `100` (solid) |
+| Hover fill opacity | `18` | Slider, fill opacity for the item under the pointer |
 
 ### Tooltips
 
 | Setting | Default | Description |
 | --- | --- | --- |
 | Restyle tooltips | `on` | Repaint Explorer tooltips and round their corners |
-| Tooltip background color | `#103051` | Hex RGB color of the tooltip background |
-| Tooltip border color | `#0078D4` | Hex RGB color of the 1px tooltip border |
-| Tooltip corner radius | `6` | Pixels, `0` for sharp corners |
+| Tooltip background color | `#103051` | Color picker, theme `9` only |
+| Tooltip border color | `#0078D4` | Color picker, theme `9` only |
+| Tooltip corner radius | `6` | Slider, `0` for sharp corners |
 
-Thickness, radius and inset are in pixels at 100% DPI and are scaled
-automatically on monitors with a different scale factor.
+The tooltip settings are hidden while the restyling switch is off. Thickness,
+radius and inset are in pixels at 100% DPI and are scaled automatically on
+monitors with a different scale factor.
 
 ## Notes
 
@@ -96,7 +129,8 @@ automatically on monitors with a different scale factor.
 - The stock drawing is replaced, not hidden: if the mod fails to draw, nothing
   is drawn for that part.
 
-Tested on Windows 11 Pro 26H2 (build 26200), Windhawk 1.7.3.
+Tested on Windows 11 Pro 26H2 (build 26200) with Windhawk 2.0 alpha 8 and
+Windhawk 1.7.3.
 
 ## Русский
 
@@ -108,21 +142,40 @@ Tested on Windows 11 Pro 26H2 (build 26200), Windhawk 1.7.3.
 
 ### Установка
 
-1. Установите Windhawk 1.7 или новее.
+1. Установите Windhawk 1.7 или новее; в 2.0 появляются пикеры цветов и
+   ползунки, о которых речь ниже.
 2. В Windhawk: **Mods** -> **Create new mod**.
 3. Вставьте содержимое файла `explorer-selection-border.wh.cpp` вместо шаблона.
 4. **Compile mod** (Ctrl+B), затем **Install mod**.
 
-Можно и просто сохранить `.wh.cpp` на диск и выбрать **Install from file**.
+Можно и просто сохранить `.wh.cpp` на диск и выбрать **Install from file**, или
+поставить из терминала:
+
+```
+windhawk-cli.exe mod install --file explorer-selection-border.wh.cpp
+```
 
 ### Настройки
+
+В Windhawk 2.0 настройки выглядят настоящей формой: у каждого цвета — окно
+выбора цвета с квадратиком-образцом, у прозрачности, толщины и радиуса —
+ползунок с полем числа. В Windhawk 1.7.3 те же настройки показаны обычными
+полями, мод работает одинаково.
+
+Сверху список из девяти тем: `1` синяя, `2` фиолетовая, `3` бирюзовая, `4`
+зелёная, `5` оранжевая, `6` малиновая, `7` пурпурная, `8` графитовая, `9` —
+свои цвета (тогда появляются пикеры). Рядом с номером в списке стоит цветной
+квадратик. Тема сразу меняет цвет рамки, заливки и подсказок, а прозрачность и
+геометрия остаются вашими.
+
+Далее:
 
 - **Рамка**: цвет, прозрачность, толщина, радиус скругления и отступ от края.
 - **Заливка**: цвет, прозрачность выделения и отдельная прозрачность наведения.
 - **Подсказки**: включение, цвет фона, цвет рамки и радиус скругления.
 
-Прозрачность задаётся от `0` (невидимо) до `100` (сплошной цвет), цвета — в
-формате `#RRGGBB`. Толщина, радиус и отступ указаны в пикселях при 100% DPI и
+Цвета — в формате `#RRGGBB`, прозрачность от `0` (невидимо) до `100` (сплошной
+цвет). Толщина, радиус и отступ указаны в пикселях при 100% DPI и
 масштабируются вместе с системным.
 
 ## License

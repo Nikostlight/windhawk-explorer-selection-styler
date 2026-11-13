@@ -2,7 +2,7 @@
 // @id              explorer-selection-border
 // @name            Explorer Selection Border
 // @description     Recolors the selection, hover highlight, navigation pane, column headers and tooltips of File Explorer
-// @version         1.1
+// @version         1.2
 // @author          Spoky
 // @include         explorer.exe
 // @architecture    x86-64
@@ -52,6 +52,17 @@ Tooltips are recolored and get rounded corners.
 
 ## Settings
 
+**Windhawk 2.0** draws a real settings form: a color picker with a swatch for
+every color and a slider for every opacity, thickness and radius.
+**Windhawk 1.7.3** shows plain text and number fields, the mod works the same
+there, only without the pickers and sliders.
+
+Pick one of nine color themes. The first eight are ready palettes, numbered and
+shown with a color square (`1` blue, `2` violet, `3` teal, `4` green, `5` orange,
+`6` crimson, `7` magenta, `8` graphite); the ninth, *Custom colors*, reveals the
+color pickers below. A theme recolors the border, the fill and the tooltips at
+once; opacity and geometry stay as you set them.
+
 The first group controls the selection: border color, border opacity,
 thickness, corner radius and inset, then the fill color and the fill opacity
 for the selected and the hovered item.
@@ -86,50 +97,102 @@ scaled automatically on monitors with a different scale factor.
 Настройки: цвет и прозрачность рамки, цвет и прозрачность заливки, отдельная
 прозрачность для наведения, толщина рамки, радиус скругления и отступ. Для
 подсказок есть отдельный переключатель, цвет фона, цвет рамки и радиус.
+
+В Windhawk 2.0 настройки рисуются настоящей формой: у каждого цвета есть
+квадратик-образец и окно выбора цвета, у каждой прозрачности, толщины и
+радиуса — ползунок с полем числа. Готовых тем девять: `1` синяя, `2`
+фиолетовая, `3` бирюзовая, `4` зелёная, `5` оранжевая, `6` малиновая, `7`
+пурпурная, `8` графитовая, `9` — свои цвета (тогда появляются пикеры). Тема
+меняет цвет рамки, заливки и подсказок, а прозрачность и геометрия остаются
+вашими. В Windhawk 1.7.3 те же настройки показаны обычными полями.
 */
 // ==/WindhawkModReadme==
 
 // ==WindhawkModSettings==
 /*
+# Color theme
+- preset: custom
+  $name: Color theme
+  $description: "1-8 are ready palettes, the square shows the color and the number is its index. 9 keeps your own colors, the pickers below then appear."
+  $options:
+    - windowsBlue: "1  🟦  Windows blue (#0078D4)"
+    - violet: "2  🟪  Violet (#8B5CF6)"
+    - teal: "3  🟩  Teal (#2AA198)"
+    - green: "4  🟢  Green (#37A64B)"
+    - orange: "5  🟧  Orange (#E8862E)"
+    - crimson: "6  🟥  Crimson (#E0455A)"
+    - magenta: "7  💜  Magenta (#C445B8)"
+    - graphite: "8  ⬛  Graphite (#6E7B8B)"
+    - custom: "9  🎨  Custom colors (pickers below)"
 # Selection
 - color: "#0078D4"
   $name: Border color
-  $description: Hex RGB color of the selection border, for example #0078D4
+  $description: "Hex RGB color of the selection border, for example #0078D4"
+  #! $format: colorRgb
+  #! $showIf: {preset: custom}
 - opacity: 100
   $name: Border opacity
   $description: 0 (invisible) to 100 (solid)
+  #! $min: 0
+  #! $max: 100
+  #! $format: slider
 - thickness: 1
   $name: Border thickness
   $description: Border width in pixels, 1 to 6
+  #! $min: 1
+  #! $max: 6
+  #! $format: slider
 - radius: 4
   $name: Corner radius
   $description: Pixels, 0 for sharp corners
+  #! $min: 0
+  #! $max: 24
+  #! $format: slider
 - inset: 1
   $name: Border inset
   $description: Distance in pixels between the item edge and the border
+  #! $min: 0
+  #! $max: 12
+  #! $format: slider
 # Fill
 - fillColor: "#0078D4"
   $name: Fill color
-  $description: Hex RGB color of the selection and hover fill, for example #0078D4
+  $description: "Hex RGB color of the selection and hover fill, for example #0078D4"
+  #! $format: colorRgb
+  #! $showIf: {preset: custom}
 - fillOpacity: 35
   $name: Selection fill opacity
   $description: 0 (transparent) to 100 (solid)
+  #! $min: 0
+  #! $max: 100
+  #! $format: slider
 - hoverFillOpacity: 18
   $name: Hover fill opacity
   $description: Fill opacity for the item under the mouse pointer
+  #! $min: 0
+  #! $max: 100
+  #! $format: slider
 # Tooltips
 - tooltipEnabled: true
   $name: Restyle tooltips
   $description: Repaint Explorer tooltips and round their corners, or keep the stock ones
 - tooltipColor: "#103051"
   $name: Tooltip background color
-  $description: Hex RGB color of the tooltip background, for example #103051
+  $description: "Hex RGB color of the tooltip background, for example #103051"
+  #! $format: colorRgb
+  #! $showIf: {tooltipEnabled: true, preset: custom}
 - tooltipBorderColor: "#0078D4"
   $name: Tooltip border color
-  $description: Hex RGB color of the 1px tooltip border, for example #0078D4
+  $description: "Hex RGB color of the 1px tooltip border, for example #0078D4"
+  #! $format: colorRgb
+  #! $showIf: {tooltipEnabled: true, preset: custom}
 - tooltipRadius: 6
   $name: Tooltip corner radius
   $description: Pixels, 0 for sharp corners
+  #! $min: 0
+  #! $max: 24
+  #! $format: slider
+  #! $showIf: {tooltipEnabled: true}
 */
 // ==/WindhawkModSettings==
 
@@ -265,13 +328,70 @@ Gdiplus::Color ParseColorSetting(const wchar_t* name,
     return color;
 }
 
+// A ready-made palette. Only the accent color and the tooltip background are
+// stored per theme; the fill and the tooltip border reuse the accent.
+struct ColorPreset {
+    const wchar_t* id;
+    COLORREF accent;
+    COLORREF tooltip;
+};
+
+const ColorPreset kColorPresets[] = {
+    {L"windowsBlue", RGB(0x00, 0x78, 0xD4), RGB(0x10, 0x30, 0x51)},
+    {L"violet", RGB(0x8B, 0x5C, 0xF6), RGB(0x24, 0x1A, 0x3D)},
+    {L"teal", RGB(0x2A, 0xA1, 0x98), RGB(0x0E, 0x2F, 0x2C)},
+    {L"green", RGB(0x37, 0xA6, 0x4B), RGB(0x10, 0x33, 0x1A)},
+    {L"orange", RGB(0xE8, 0x86, 0x2E), RGB(0x3A, 0x24, 0x10)},
+    {L"crimson", RGB(0xE0, 0x45, 0x5A), RGB(0x3A, 0x12, 0x19)},
+    {L"magenta", RGB(0xC4, 0x45, 0xB8), RGB(0x3A, 0x14, 0x36)},
+    {L"graphite", RGB(0x6E, 0x7B, 0x8B), RGB(0x22, 0x29, 0x32)},
+};
+
+Gdiplus::Color RgbColor(COLORREF rgb) {
+    return Gdiplus::Color(255, GetRValue(rgb), GetGValue(rgb), GetBValue(rgb));
+}
+
+std::wstring ReadStringSetting(const wchar_t* name) {
+    std::wstring value;
+
+    const wchar_t* text = Wh_GetStringSetting(name);
+    if (text) {
+        value = text;
+        Wh_FreeStringSetting(text);
+    }
+
+    return value;
+}
+
+const ColorPreset* FindColorPreset(const std::wstring& id) {
+    for (const ColorPreset& preset : kColorPresets) {
+        if (id == preset.id) {
+            return &preset;
+        }
+    }
+
+    return nullptr;
+}
+
 void LoadSettings() {
-    g_settings.color = ParseColorSetting(L"color", g_settings.color);
-    g_settings.fillColor = ParseColorSetting(L"fillColor", g_settings.fillColor);
-    g_settings.tooltipColor =
-        ParseColorSetting(L"tooltipColor", g_settings.tooltipColor);
-    g_settings.tooltipBorderColor =
-        ParseColorSetting(L"tooltipBorderColor", g_settings.tooltipBorderColor);
+    // A theme overrides the color pickers, which the settings editor hides
+    // while one is selected. "custom" (or an unknown value) uses the pickers.
+    const ColorPreset* preset = FindColorPreset(ReadStringSetting(L"preset"));
+
+    if (preset) {
+        g_settings.color = RgbColor(preset->accent);
+        g_settings.fillColor = g_settings.color;
+        g_settings.tooltipColor = RgbColor(preset->tooltip);
+        g_settings.tooltipBorderColor = g_settings.color;
+    } else {
+        g_settings.color = ParseColorSetting(L"color", g_settings.color);
+        g_settings.fillColor =
+            ParseColorSetting(L"fillColor", g_settings.fillColor);
+        g_settings.tooltipColor =
+            ParseColorSetting(L"tooltipColor", g_settings.tooltipColor);
+        g_settings.tooltipBorderColor = ParseColorSetting(
+            L"tooltipBorderColor", g_settings.tooltipBorderColor);
+    }
 
     g_settings.opacity = ReadIntSetting(L"opacity", 100, 0, 100);
     g_settings.fillOpacity = ReadIntSetting(L"fillOpacity", 35, 0, 100);
